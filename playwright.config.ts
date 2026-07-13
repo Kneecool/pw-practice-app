@@ -24,7 +24,13 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 2 : undefined,
-  reporter: [['html', { open: 'never' }], ['list']],
+  reporter: [
+    ['html', { open: 'never' }],
+    ['list'],
+    /* Watchtower's Patrol runner sets PLAYWRIGHT_JSON_OUTPUT_NAME so it can
+     * consume the JSON results post-run; fall back to a local file otherwise. */
+    ['json', { outputFile: process.env.PLAYWRIGHT_JSON_OUTPUT_NAME ?? 'test-results.json' }],
+  ],
 
   use: {
     baseURL,
