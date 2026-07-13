@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { ROUTES } from './helpers/navigation';
+import { ROUTES } from '../helpers/navigation';
 
 /** Modal & Overlays > Popover. */
 test.describe('Popover', () => {
