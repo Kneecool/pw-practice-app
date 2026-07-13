@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { ROUTES } from './helpers/navigation';
+import { ROUTES } from '../helpers/navigation';
 
 /** Tables & Data > Tree Grid (Nebular tree grid) — expand/collapse, filter, sort. */
 test.describe('Tree Grid', () => {

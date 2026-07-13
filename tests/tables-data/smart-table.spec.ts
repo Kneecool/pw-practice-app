@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { ROUTES } from './helpers/navigation';
+import { ROUTES } from '../helpers/navigation';
 
 /** Tables & Data > Smart Table (ng2-smart-table) — full CRUD, filter, sort, paging. */
 test.describe('Smart Table', () => {
