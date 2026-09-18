@@ -10,6 +10,10 @@ on:
         description: "Only run tests whose title matches this pattern"
         required: false
         default: ""
+      env:
+        description: "Which environment to target (exposed to tests as TEST_ENV)"
+        required: false
+        default: ""
 jobs:
   test-and-report:
     runs-on: ubuntu-latest
@@ -24,6 +28,8 @@ jobs:
         env:
           PATROL_PATH: ${{ inputs.path }}
           PATROL_GREP: ${{ inputs.grep }}
+          # Exposed to the tests so the repo's config can map it to a baseURL (#136).
+          TEST_ENV: ${{ inputs.env }}
           # Write the JSON reporter straight to a file — NOT via stdout redirect.
           # A repo's global-setup/test console output pollutes stdout, corrupting
           # a "> report.json" capture into invalid JSON the ingest rejects (#166).
@@ -44,6 +50,8 @@ jobs:
             -H "X-Watchtower-Branch: ${{ github.ref_name }}" \
             -H "X-Watchtower-Commit: ${{ github.sha }}" \
             -H "X-Watchtower-Suite: ${{ inputs.path }}" \
+            -H "X-Watchtower-Grep: ${{ inputs.grep }}" \
+            -H "X-Watchtower-Env: ${{ inputs.env }}" \
             --data @report.json) || true
           case "$status" in
             2??) echo "Report ingested (HTTP $status)" ;;
